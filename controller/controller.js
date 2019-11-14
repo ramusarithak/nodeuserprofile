@@ -1,31 +1,69 @@
 const da=require('../services/services');
 const router=require('express').Router();
-
-
+var express=require('express')
+var app=express()
 module.exports=router;
 
-router.post('/inserted',datas);
+router.get('/getuserprofile',getUserFile);
+router.post('/ins',insertProfile);
+router.put('/update',updateProfile)
+router.delete('/delete',deleteProfile);
 
-router.put('/update',du)
 
-let pd=req.body;
+// get userprofile
+function getUserFile(req,res,next){
+da.getuserprofile()
+  .then((resData)=>{
+      console.log('res',res)
+    res.status(200).send({data:resData})
+}).catch((err)=>{
+    res.status(200).send({data:err})
+})
+}
+//end  get userprofile
 
-function datas(req,res,next){
-// console.log(pd);
-    da.inserted(pd)
+
+
+
+
+// start of data insertprofile 
+function insertProfile(req,res,next){
+   
+    da.inserted(req.body)
     
-    .then((res)=>{
-        res.status(200).send ({ data:res })
+    .then((resD)=>{
+        res.status(200).send ({ data:resD})
     }).catch((err)=>{
         res.status(200).send({data:err})
     })
     }
+//  end of data insertprofile
 
-    function du(req,res,next){
-        da.update(pd)
-        .then((res)=>{
-            res.status(200).send({data:res})
+
+
+    // start of updateprofile
+    function updateProfile(req,res,next){
+        
+        da.update(req.body)
+        .then((resdat)=>{
+            res.status(200).send({data:resdat})
         }).catch((err)=>{
             res.status(200).send({data:err})
         })
     }
+// end of updateprofile
+    
+
+
+// start of deleteprofile
+function deleteProfile(req,res,next){
+    // let pd=req.body;
+    da.deletea(req.body)
+    .then((response)=>{
+res.status(200).send({data:response})
+    }).catch((err)=>{
+        res.status(200).send({data:err})
+    })
+
+}
+// end of deleteprofile
